@@ -50,5 +50,19 @@ def make_point_class(n, name=None):
 
     return type(name, (), attributes)
 
+if __name__ == "__main__":
+    Point3 = make_point_class(3)
+    p = Point3(1, 2, 3.5)
 
+    print(Point3.__name__)                      # Point3
+    print(p.x2)                                 # 3.5
+    print(p.to_tuple())                         # (1, 2, 3.5)
+    print(make_point_class(3) is Point3)        # True
+    print(make_point_class(2) is Point3)        # False
+    print(make_point_class(2, "Vector").__name__)  # Vector
 
+    for bad_coords in [(1, 2), (1, "a", 3), (True, 1, 2)]:
+        try:
+            Point3(*bad_coords)
+        except TypeError as error:
+            print("Rejected:", error)
